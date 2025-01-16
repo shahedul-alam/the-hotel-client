@@ -44,7 +44,7 @@ const HeroBanner = () => {
   );
 
   return (
-    <div className="md:p-5">
+    <div className="md:p-5 mb-10 md:mb-16">
       <div
         ref={sliderRef}
         className="keen-slider h-[calc(100vh-50vh)] lg:h-[calc(100vh-30vh)]"
