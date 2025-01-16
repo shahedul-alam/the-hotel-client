@@ -1,8 +1,11 @@
+import HeroBanner from "../../components/homepage/HeroBanner";
+import HotelMap from "../../components/homepage/HotelMap";
 
 const HomePage = () => {
   return (
     <main>
-      <h1>homepage</h1>
+      <HeroBanner />
+      <HotelMap />
     </main>
   );
 };

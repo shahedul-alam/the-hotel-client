@@ -1,11 +1,12 @@
 import { Outlet } from "react-router";
+import Navbar from "../components/shared/Navbar";
 
 const MainLayout = () => {
   return (
-    <>
-      <h1>main layout</h1>
+    <div className="font-syne">
+      <Navbar />
       <Outlet />
-    </>
+    </div>
   );
 };
 
