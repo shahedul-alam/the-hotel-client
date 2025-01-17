@@ -9,13 +9,13 @@ const Navbar = () => {
     signoutUser()
       .then(() => {
         // successful logout toast
-        successToast("Logout successfully!")
+        successToast("Logout successfully!");
         // navigating to the login page
         navigate("/login");
       })
       .catch(() => {
         // error logout toast
-        errorToast("Ops! Something went wrong.");
+        errorToast("Uh-oh! Something went wrong.");
       });
   };
 
@@ -89,16 +89,16 @@ const Navbar = () => {
                 role="button"
                 className="btn btn-ghost btn-circle avatar"
               >
-                <div className="ring-[#047857] ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-                  <img alt="user" src={user.photoURL} />
+                <div className="ring-primary-border ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
+                  <img alt="user" src={user?.photoURL} />
                 </div>
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-base-100 z-[1] mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <a>{user.displayName}</a>
+                  <p>{user?.displayName}</p>
                 </li>
                 <li>
                   <button onClick={handleSignoutUser}>Logout</button>
@@ -106,9 +106,12 @@ const Navbar = () => {
               </ul>
             </div>
           </div>
-        ) : (  
+        ) : (
           <div className="navbar-end gap-2 md:gap-4">
-            <Link to={"/login"} className="btn bg-black text-white rounded-none">
+            <Link
+              to={"/login"}
+              className="btn bg-black text-white rounded-none hover:text-black"
+            >
               Login
             </Link>
             <Link to={"/register"} className="btn rounded-none">

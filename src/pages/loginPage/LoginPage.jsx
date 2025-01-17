@@ -24,9 +24,9 @@ const LoginPage = () => {
         // navigating to previous page
         navigate(from, { replace: true });
       })
-      .catch((error) => {
+      .catch(() => {
         // showing error login alert
-        errorToast("Ops! We couldn't log you in.");
+        errorToast("Uh-oh! We couldn't log you in.");
       });
   };
 
@@ -40,7 +40,7 @@ const LoginPage = () => {
       })
       .catch(() => {
         // showing error login alert
-        errorToast("Ops! We couldn't log you in.");
+        errorToast("Uh-oh! We couldn't log you in.");
       });
   };
 
@@ -66,7 +66,7 @@ const LoginPage = () => {
                 type="email"
                 name="email"
                 placeholder="name@example.com"
-                className="input input-ghost border border-black rounded-none"
+                className="input input-bordered border-black rounded-none"
                 required
               />
             </div>
@@ -78,7 +78,7 @@ const LoginPage = () => {
                 type="password"
                 name="password"
                 placeholder="password:"
-                className="input input-ghost border border-black rounded-none"
+                className="input input-bordered border-black rounded-none"
                 required
               />
               <label className="label">
