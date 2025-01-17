@@ -9,6 +9,10 @@ export default {
       fontFamily: {
         "syne": ["Syne", "serif"],
       },
+      colors: {
+        "secondary": "#575757",
+        "primary-border": "#d6d6d6",
+      },
     },
   },
   plugins: [

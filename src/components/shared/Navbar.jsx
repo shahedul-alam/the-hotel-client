@@ -1,9 +1,26 @@
-import { Link, NavLink } from "react-router";
+import { useContext } from "react";
+import { Link, NavLink, useNavigate } from "react-router";
+import {AuthContext} from "../../contexts/AuthContextProvider";
 
 const Navbar = () => {
+  const { user, signoutUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSignoutUser = () => {
+    signoutUser()
+      .then(() => {
+        console.log('signout successful');
+
+        navigate("/login");
+      })
+      .catch(() => {
+        console.log("could not signout");
+      });
+  };
+
   return (
     <header>
-      <nav className="navbar border-b border-base-300">
+      <nav className="navbar border-b border-primary-border">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -39,7 +56,7 @@ const Navbar = () => {
           </div>
           <Link
             to={"/"}
-            className="btn btn-ghost rounded-none text-xl border border-base-300 md:text-4xl"
+            className="btn btn-ghost rounded-none text-xl border border-primary-border md:text-4xl"
           >
             the hotel
           </Link>
@@ -63,14 +80,41 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <div className="navbar-end gap-2 md:gap-4">
-          <Link to={"/login"} className="btn bg-black text-white rounded-none">
-            Login
-          </Link>
-          <Link to={"/register"} className="btn rounded-none">
-            Register
-          </Link>
-        </div>
+        {user ? (
+          <div className="navbar-end">
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar"
+              >
+                <div className="ring-[#047857] ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
+                  <img alt="user" src={user.photoURL} />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              >
+                <li>
+                  <a>{user.displayName}</a>
+                </li>
+                <li>
+                  <button onClick={handleSignoutUser}>Logout</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        ) : (  
+          <div className="navbar-end gap-2 md:gap-4">
+            <Link to={"/login"} className="btn bg-black text-white rounded-none">
+              Login
+            </Link>
+            <Link to={"/register"} className="btn rounded-none">
+              Register
+            </Link>
+          </div>
+        )}
       </nav>
     </header>
   );

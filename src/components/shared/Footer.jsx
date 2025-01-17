@@ -12,29 +12,28 @@ const Footer = () => {
           <p className="text-white mt-3">contact@thehotel.com</p>
         </div>
         <nav>
-          <h6 className="footer-title text-base-100">Company</h6>
+          <h6 className="footer-title text-secondary opacity-100">Company</h6>
           <Link className="link link-hover text-white">About us</Link>
           <Link className="link link-hover text-white">Contact</Link>
           <Link className="link link-hover text-white">Jobs</Link>
           <Link className="link link-hover text-white">Press kit</Link>
         </nav>
         <nav>
-          <h6 className="footer-title text-base-100">Legal</h6>
-          <Link className="link link-hover text-white">Terms of use</Link>
-          <Link className="link link-hover text-white">Privacy policy</Link>
-          <Link className="link link-hover text-white">Cookie policy</Link>
+          <h6 className="footer-title text-secondary opacity-100">Services</h6>
+          <Link className="link link-hover text-white">Branding</Link>
+          <Link className="link link-hover text-white">Design</Link>
+          <Link className="link link-hover text-white">Marketing</Link>
+          <Link className="link link-hover text-white">Advertisement</Link>
         </nav>
       </footer>
-      <footer className="footer bg-black text-base-content border-base-300 border-t px-10 py-4">
+      <footer className="footer bg-black text-base-content border-[#575757] border-t px-10 py-4">
         <aside className="grid-flow-col items-center">
           <div>
             <div className="flex gap-5">
               <p className="text-white font-bold">Terms & Conditions</p>
               <p className="text-white font-bold">Privacy Policy</p>
             </div>
-            <p className="text-base-100 mt-4">
-              © Copyright Hoteller Theme Demo - Theme by ThemeGoods
-            </p>
+            <p className="text-secondary  mt-4">© Copyright the hotel, 2025</p>
           </div>
         </aside>
         <nav className="md:place-self-center md:justify-self-end">

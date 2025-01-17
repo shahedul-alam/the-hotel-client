@@ -2,7 +2,7 @@ import passportIcon from "../../assets/passport-icon.png";
 
 const Newsletter = () => {
   return (
-    <section className="border-t border-base-300">
+    <section className="border-t border-primary-border">
       <div className="flex flex-col items-center pt-[70px] px-5 pb-10 max-w-lg mx-auto">
         <img src={passportIcon} className="h-32 mb-8" />
         <h2 className="text-2xl font-semibold text-black text-center mb-5">

@@ -4,15 +4,16 @@ import HomePage from "../pages/homepage/homePage";
 import RoomsPage from "../pages/roomsPage/RoomsPage";
 
 const AppRouter = () => {
-
   return (
     <BrowserRouter>
-    <Routes>
-      <Route element={<MainLayout />}>
-        <Route index  element={<HomePage />} />
-        <Route path="rooms"  element={<RoomsPage />} />
-      </Route>
-    </Routes>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="rooms" element={<RoomsPage />} />
+          <Route path="login" element={<RoomsPage />} />
+          <Route path="register" element={<RoomsPage />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 };
