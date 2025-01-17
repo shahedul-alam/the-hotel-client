@@ -2,8 +2,8 @@ import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
   return (
-    <nav>
-      <div className="navbar border-b border-base-300">
+    <header>
+      <nav className="navbar border-b border-base-300">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -71,8 +71,8 @@ const Navbar = () => {
             Register
           </Link>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 };
 
