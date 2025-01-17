@@ -48,7 +48,7 @@ const Navbar = () => {
                 <Link to={"/"}>Home</Link>
               </li>
               <li>
-                <Link to={"/rooms"}>Rooms</Link>
+                <Link to={"/our-rooms"}>Rooms</Link>
               </li>
               <li>
                 <Link to={"/my-bookings"}>My Bookings</Link>
@@ -70,7 +70,7 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to={"/rooms"} className="rounded-none">
+              <NavLink to={"/our-rooms"} className="rounded-none">
                 Rooms
               </NavLink>
             </li>
