@@ -1,20 +1,21 @@
-import { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
-import {AuthContext} from "../../contexts/AuthContextProvider";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
-  const { user, signoutUser } = useContext(AuthContext);
+  const { user, signoutUser, successToast, errorToast } = useAuth();
   const navigate = useNavigate();
 
   const handleSignoutUser = () => {
     signoutUser()
       .then(() => {
-        console.log('signout successful');
-
+        // successful logout toast
+        successToast("Logout successfully!")
+        // navigating to the login page
         navigate("/login");
       })
       .catch(() => {
-        console.log("could not signout");
+        // error logout toast
+        errorToast("Ops! Something went wrong.");
       });
   };
 
