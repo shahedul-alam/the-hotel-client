@@ -1,28 +1,48 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import HomePage from "../pages/homepage/homePage";
 import LoginPage from "../pages/loginPage/LoginPage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
 import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
 import ErrorPage from "../pages/errorPage/ErrorPage";
-import PrivateRoute from "../router/PrivateRoute";
-import OurRooms from "../pages/ourRoomsPage/OurRooms";
+import OurRooms, { roomsLoader } from "../pages/ourRoomsPage/OurRoomsPage";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />
+      },
+      {
+        path: "our-rooms",
+        element: <OurRooms />,
+        loader: roomsLoader
+      },
+      {
+        path: "login",
+        element: <LoginPage />
+      },
+      {
+        path: "register",
+        element: <RegisterPage />
+      },
+      {
+        path: "reset-password",
+        element: <ForgotPasswordPage />
+      },
+      {
+        path: "*",
+        element: <ErrorPage />
+      }
+    ]
+  }
+]);
 
 const AppRouter = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="our-rooms" element={<OurRooms />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="reset-password" element={<ForgotPasswordPage />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default AppRouter;
