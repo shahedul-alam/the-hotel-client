@@ -1,6 +1,10 @@
-import { Link } from "react-router";
+import { useState } from "react";
+import BookingCalander from "../ourRoomsPage/BookingCalander";
+import BookingModal from "../ourRoomsPage/BookingModal";
 
 const RoomDetails = ({ data }) => {
+  const [startDate, setStartDate] = useState(new Date());
+
   const {
     _id,
     amenities,
@@ -18,31 +22,45 @@ const RoomDetails = ({ data }) => {
   } = data;
 
   console.log(data);
-
   return (
     <section className="mb-10 md:mb-16">
       <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="aspect-square bg-no-repeat bg-center bg-cover" style={{ backgroundImage: `url(${imageURL})` }}></div>
+        <div
+          className="aspect-square md:aspect-auto bg-no-repeat bg-center bg-cover"
+          style={{ backgroundImage: `url(${imageURL})` }}
+        ></div>
+
         <div className="w-4/5 mx-auto pt-14 pb-10 md:place-content-center">
-          <h2 className="text-3xl lg:text-4xl text-black font-semibold text-center mb-6">
+          <h2 className="text-3xl lg:text-4xl text-black font-semibold text-center mb-2 md:text-left">
             {name}
           </h2>
-          <div className="flex justify-center gap-2 text-black mb-8">
+          <p className="text-black text-xl font-medium text-center md:text-left mb-4">
+            ${pricePerNight} <span>night</span>
+          </p>
+          <div className="flex justify-center md:justify-start gap-2 text-black mb-6">
             <p>Up to {totalGuests} Adults</p>
             <span>|</span>
             <p>{bedType}</p>
             <span>|</span>
             <p>{size}</p>
           </div>
-          <p className="text-black text-center my-5 md:h-12">{description}</p>
-          <Link
+          <p className="text-black text-center md:text-left mb-5">
+            {description}
+          </p>
+          <div className="flex justify-center md:justify-start mb-5">
+            <BookingCalander data={data} startDate={startDate} setStartDate={setStartDate} />
+          </div>
+          <button
             to={_id}
-            className="w-full btn btn-ghost border-black rounded-none font-bold uppercase"
+            className="w-full md:w-fit btn btn-ghost border-black rounded-none font-bold uppercase"
+            onClick={()=>document.getElementById('bookingModal').showModal()}
           >
             Book Now
-          </Link>
+          </button>
+          <BookingModal data={data} bookingDate={startDate} />
         </div>
       </div>
+
       <div className="bg-black px-5 py-20">
         <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mb-5 lg:w-4/5 xl:w-3/5 lg:mx-auto">
           <div>

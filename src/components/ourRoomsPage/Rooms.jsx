@@ -11,7 +11,7 @@ const Rooms = ({ data }) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-10 px-5 lg:px-10">
         {data.map((item) => (
           <RoomsCard key={item._id} data={item} />
         ))}
