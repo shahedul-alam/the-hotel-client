@@ -1,17 +1,10 @@
 import { Link } from "react-router";
 
 const RoomsCard = ({ data }) => {
-  const {
-    imageURL,
-    name,
-    totalGuests,
-    size,
-    bedType,
-    description,
-  } = data;
+  const { _id, imageURL, name, totalGuests, size, bedType, description } = data;
 
   return (
-    <div className="p-5 pb-10 lg:p-10 border-y md:border-r border-primary-border">
+    <div className="p-5 pb-10 lg:p-10 border-y last:border-b md:odd:border-r border-primary-border">
       <div
         className="aspect-video bg-center bg-cover mb-8"
         style={{ backgroundImage: `url(${imageURL})` }}
@@ -27,8 +20,11 @@ const RoomsCard = ({ data }) => {
           <span>|</span>
           <p>{size}</p>
         </div>
-        <p className="text-black my-5 lg:h-12">{description}</p>
-        <Link className="w-full btn btn-ghost border-black rounded-none font-bold uppercase">
+        <p className="text-black my-5 md:h-12">{description}</p>
+        <Link
+          to={_id}
+          className="w-full btn btn-ghost border-black rounded-none font-bold uppercase"
+        >
           see details
         </Link>
       </div>

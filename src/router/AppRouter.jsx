@@ -4,8 +4,10 @@ import HomePage from "../pages/homepage/homePage";
 import LoginPage from "../pages/loginPage/LoginPage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
 import ForgotPasswordPage from "../pages/forgotPasswordPage/ForgotPasswordPage";
-import ErrorPage from "../pages/errorPage/ErrorPage";
+import NotFoundPage from "../pages/notFoundPage/NotFoundPage";
 import OurRooms, { roomsLoader } from "../pages/ourRoomsPage/OurRoomsPage";
+import RoomDetailsPage, { roomDetailsLoader } from "../pages/RoomDetailsPage/RoomDetailsPage";
+import ErrorPage from "../pages/errorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +24,12 @@ const router = createBrowserRouter([
         loader: roomsLoader
       },
       {
+        path: "our-rooms/:id",
+        element: <RoomDetailsPage />,
+        errorElement: <ErrorPage />,
+        loader: roomDetailsLoader
+      },
+      {
         path: "login",
         element: <LoginPage />
       },
@@ -35,7 +43,7 @@ const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <ErrorPage />
+        element: <NotFoundPage />
       }
     ]
   }

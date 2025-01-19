@@ -19,9 +19,5 @@ export default OurRoomsPage;
 export const roomsLoader = async () => {
   const result = await axios.get("http://localhost:5000/rooms");
 
-  if (result.status !== 200) {
-    throw Error("Could not found rooms details!");
-  }
-
   return result.data;
 };
