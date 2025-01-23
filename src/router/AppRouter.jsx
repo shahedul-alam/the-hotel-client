@@ -9,6 +9,7 @@ import OurRooms, { roomsLoader } from "../pages/ourRoomsPage/OurRoomsPage";
 import RoomDetailsPage, { roomDetailsLoader } from "../pages/RoomDetailsPage/RoomDetailsPage";
 import ErrorPage from "../pages/errorPage/ErrorPage";
 import PrivateRoute from "./PrivateRoute";
+import MyBookingsPage from "../pages/myBookingsPage/MyBookingsPage";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
         element: <PrivateRoute><RoomDetailsPage /></PrivateRoute>,
         errorElement: <ErrorPage />,
         loader: roomDetailsLoader
+      },
+      {
+        path: "my-bookings",
+        element: <PrivateRoute><MyBookingsPage /></PrivateRoute>,
+        // loader: roomDetailsLoader
       },
       {
         path: "login",

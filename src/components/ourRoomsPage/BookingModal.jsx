@@ -1,6 +1,6 @@
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router";
-import useAxiosSecure, { axiosInstance } from "../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const BookingModal = ({ data, bookingDate }) => {
   const { user, successToast, errorToast } = useAuth();
