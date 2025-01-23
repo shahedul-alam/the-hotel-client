@@ -21,7 +21,6 @@ const RoomDetails = ({ data }) => {
     userReviews,
   } = data;
 
-  console.log(data);
   return (
     <section className="mb-10 md:mb-16">
       <div className="grid grid-cols-1 md:grid-cols-2">
@@ -51,7 +50,6 @@ const RoomDetails = ({ data }) => {
             <BookingCalander data={data} startDate={startDate} setStartDate={setStartDate} />
           </div>
           <button
-            to={_id}
             className="w-full md:w-fit btn btn-ghost border-black rounded-none font-bold uppercase"
             onClick={()=>document.getElementById('bookingModal').showModal()}
           >

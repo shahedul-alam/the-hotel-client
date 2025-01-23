@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { axiosInstance } from "../hooks/useAxiosSecure";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -12,7 +13,6 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-// import { axiosInstance } from "../hooks/useAxiosSecure";
 
 export const AuthContext = createContext();
 
@@ -23,15 +23,14 @@ const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
 
-      // if (currentUser) {
-      //   axiosInstance
-      //     .post("/generate-token", { email: currentUser.email })
-      //     .then((res) => setLoading(false));
-      // } else {
-      //   axiosInstance.get("/remove-token").then((res) => setLoading(false));
-      // }
+      if (currentUser) {
+        axiosInstance
+          .post("/get-token", { email: currentUser.email })
+          .then((res) => setLoading(false));
+      } else {
+        axiosInstance.get("/remove-token").then((res) => setLoading(false));
+      }
     });
 
     return () => {

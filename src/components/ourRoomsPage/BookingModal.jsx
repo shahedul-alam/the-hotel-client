@@ -1,31 +1,53 @@
-import axios from "axios";
 import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router";
+import useAxiosSecure, { axiosInstance } from "../../hooks/useAxiosSecure";
 
 const BookingModal = ({ data, bookingDate }) => {
   const { user, successToast, errorToast } = useAuth();
-  const { _id, name, bedType, description, pricePerNight, size, totalGuests } =
-    data;
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
+
+  const {
+    _id,
+    name,
+    imageURL,
+    bedType,
+    description,
+    pricePerNight,
+    size,
+    totalGuests,
+  } = data;
 
   const handleBooking = () => {
     const bookingInfo = {
       roomId: _id,
+      name,
+      imageURL,
       client_name: user.displayName,
       client_email: user.email,
       price: pricePerNight,
-      currency: "USD",
       bookingDate,
     };
 
-    axios
-      .post("http://localhost:5000/booking", bookingInfo)
+    axiosSecure
+      .post("/booking", bookingInfo)
       .then((res) => {
-        successToast("Booked successfully!");
-
-        document.getElementById("bookingModal").close();
+        if (res.data.success) {
+          // showing alert on successful booking
+          successToast("Booked successfully!");
+          // closing the modal
+          document.getElementById("bookingModal").close();
+          // redirecting to the my booking page
+          navigate("/my-bookings", { replace: true });
+        } else {
+          errorToast("Booking failed");
+        }
       })
       .catch((error) => {
-        console.log(error);
-        errorToast("Sorry! Something went wrong.");
+        // showing alert on error
+        errorToast(error.response.data.message);
+        // closing the modal
+        document.getElementById("bookingModal").close();
       });
   };
 

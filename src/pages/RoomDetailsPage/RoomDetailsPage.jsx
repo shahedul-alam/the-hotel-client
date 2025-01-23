@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useLoaderData } from "react-router";
 import RoomDetails from "../../components/roomDetailsPage/RoomDetails";
 import Newsletter from "../../components/homepage/Newsletter";
 import RoomsSlider from "../../components/roomDetailsPage/RoomsSlider";
+import { axiosInstance } from "../../hooks/useAxiosSecure";
 
 const RoomDetailsPage = () => {
   const data = useLoaderData();
@@ -21,7 +21,7 @@ export default RoomDetailsPage;
 export const roomDetailsLoader = async ({ params }) => {
   try {
     const { id } = params;
-    const result = await axios.get(`http://localhost:5000/rooms/${id}`);
+    const result = await axiosInstance.get(`/rooms/${id}`);
 
     return result.data.data;
   } catch (error) {
@@ -33,7 +33,7 @@ export const roomDetailsLoader = async ({ params }) => {
         case 404:
           throw new Error("Room not found");
         default:
-          throw new Error("Something went wrong");
+          throw new Error("Something went wrong!");
       }
     }
     throw error;

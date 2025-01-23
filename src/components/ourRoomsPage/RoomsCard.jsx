@@ -2,7 +2,6 @@ import { Link } from "react-router";
 
 const RoomsCard = ({ data }) => {
   const { _id, imageURL, name, totalGuests, size, bedType, description, userReviews } = data;
-  console.log(userReviews)
 
   return (
     <Link to={_id}>

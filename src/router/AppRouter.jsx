@@ -8,6 +8,7 @@ import NotFoundPage from "../pages/notFoundPage/NotFoundPage";
 import OurRooms, { roomsLoader } from "../pages/ourRoomsPage/OurRoomsPage";
 import RoomDetailsPage, { roomDetailsLoader } from "../pages/RoomDetailsPage/RoomDetailsPage";
 import ErrorPage from "../pages/errorPage/ErrorPage";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "our-rooms/:id",
-        element: <RoomDetailsPage />,
+        element: <PrivateRoute><RoomDetailsPage /></PrivateRoute>,
         errorElement: <ErrorPage />,
         loader: roomDetailsLoader
       },
