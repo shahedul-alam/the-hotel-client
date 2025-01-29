@@ -26,7 +26,9 @@ const BookingModal = ({ data, bookingDate }) => {
       client_name: user.displayName,
       client_email: user.email,
       price: pricePerNight,
-      bookingDate,
+      bookingDate: bookingDate.getFullYear() + '-' +
+      String(bookingDate.getMonth() + 1).padStart(2, '0') + '-' +
+      String(bookingDate.getDate()).padStart(2, '0'),
     };
 
     axiosSecure
@@ -63,7 +65,7 @@ const BookingModal = ({ data, bookingDate }) => {
               ${pricePerNight} night
             </p>
             <p className="text-black text-xl font-medium text-center md:text-left mb-4">
-              Booking Date: {bookingDate.toLocaleDateString("en-GB")}
+              Booking Date: {bookingDate?.toLocaleDateString("en-GB")}
             </p>
           </div>
           <div className="flex justify-center md:justify-start gap-2 text-black mb-6">

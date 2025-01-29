@@ -1,9 +1,8 @@
 import { useState } from "react";
 import BookingCalander from "../ourRoomsPage/BookingCalander";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const UpdateBookingModal = ({ data, handleUpdateBookingDates }) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
 
   return (
     <dialog id={`updateBookingModal${data._id}`} className="modal">
@@ -19,15 +18,17 @@ const UpdateBookingModal = ({ data, handleUpdateBookingDates }) => {
         <div className="flex justify-center gap-4 md:justify-start">
           <button
             className="btn btn-ghost bg-black text-white hover:text-black rounded-none font-bold uppercase confirmBtn"
-            onClick={() => handleUpdateBookingDates(startDate)}
+            disabled={startDate ? false : true}
+            onClick={() => handleUpdateBookingDates(startDate, setStartDate)}
           >
             Confirm
           </button>
           <button
             className="btn btn-ghost border-black rounded-none font-bold uppercase"
-            onClick={() =>
-              document.getElementById(`updateBookingModal${data._id}`).close()
-            }
+            onClick={() => {
+              document.getElementById(`updateBookingModal${data._id}`).close();
+              setStartDate(null);
+            }}
           >
             Cancel
           </button>

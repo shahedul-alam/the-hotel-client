@@ -3,7 +3,7 @@ import BookingCalander from "../ourRoomsPage/BookingCalander";
 import BookingModal from "../ourRoomsPage/BookingModal";
 
 const RoomDetails = ({ data }) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(null);
 
   const {
     _id,
@@ -51,6 +51,7 @@ const RoomDetails = ({ data }) => {
           </div>
           <button
             className="w-full md:w-fit btn btn-ghost border-black rounded-none font-bold uppercase"
+            disabled={startDate ? false : true}
             onClick={()=>document.getElementById('bookingModal').showModal()}
           >
             Book Now

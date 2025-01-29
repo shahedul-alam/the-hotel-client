@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import useAxiosSecure, { axiosInstance } from "../../hooks/useAxiosSecure";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import UpdateBookingModal from "./UpdateBookingModal";
 
@@ -25,8 +25,6 @@ const BookingTableRow = ({
     bookings,
   } = data;
 
-  console.log(data);
-
   const handleCancelBooking = () => {
     axiosSecure
       .delete(
@@ -39,46 +37,54 @@ const BookingTableRow = ({
       .catch((error) => errorToast(error.response.data?.message));
   };
 
-  const handleUpdateBookingDates = (updatedDate) => {
+  const handleUpdateBookingDates = (updatedDate, setStartDate) => {
+    // Format the updatedDate properly
+    const formattedUpdatedDate =
+      updatedDate.getFullYear() +
+      "-" +
+      String(updatedDate.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(updatedDate.getDate()).padStart(2, "0");
+
     const updatedBookingInfo = {
       roomId: roomId,
       bookingId: _id,
       userEmail: userEmail,
       currentBookingDate: bookingDate,
-      newBookingDate: updatedDate,
+      newBookingDate: formattedUpdatedDate, // Ensure correct format
     };
 
     axiosSecure
       .patch("/update-booking", updatedBookingInfo)
       .then((res) => {
-        // showing success alert
+        // Showing success alert
         successToast("Booking date updated successfully!");
-        // closing the modal
+        // Closing the modal
         document.getElementById(`updateBookingModal${_id}`).close();
-        // updating the state
+        // Updating the state immutably with correctly formatted date
         setBookingData((prev) =>
           prev.map((item) => {
-            if (item._id === _id) {
-              const dateIndex = item.bookings.indexOf(bookingDate);
-
-              // If the bookingDate is found, replace it with updatedDate
-              if (dateIndex !== -1) {
-                return {
-                  ...item,
-                  bookingDate: updatedDate, // Update the bookingDate field
-                  bookings: [
-                    ...item.bookings.slice(0, dateIndex),
-                    updatedDate,
-                    ...item.bookings.slice(dateIndex + 1),
-                  ], // Replace the date in bookings immutably
-                };
-              }
+            // Check if the item's roomId matches the current booking's roomId
+            if (item.roomId === roomId) {
+              return {
+                ...item,
+                bookingDate: item.bookingDate === bookingDate ? formattedUpdatedDate : item.bookingDate, // Update main booking date if it matches
+                bookings: item.bookings.map((date) =>
+                  date === bookingDate ? formattedUpdatedDate : date
+                ), // Update all occurrences in the bookings array
+              };
             }
-            return item; // Return the unchanged item for all other cases
+            return item; // Return unchanged item for all other cases
           })
         );
+        
+        setStartDate(null);
       })
-      .catch((error) => errorToast(error.response.data?.message));
+      .catch((error) => {
+        errorToast(error.response.data?.message);
+        // Closing the modal
+        document.getElementById(`updateBookingModal${_id}`).close();
+      });
   };
 
   return (
@@ -98,7 +104,7 @@ const BookingTableRow = ({
       <td>{client_name}</td>
       <td>{client_email}</td>
       <th>${price}</th>
-      <th>{new Date(bookingDate).toLocaleDateString("en-GB")}</th>
+      <th>{new Date(bookingDate)?.toLocaleDateString("en-GB")}</th>
       <th>
         <button
           className="btn btn-ghost bg-green-600 text-white rounded-none hover:text-black"

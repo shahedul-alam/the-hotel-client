@@ -1,16 +1,16 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const BookingCalander = ({ data, startDate, setStartDate }) => {
+const BookingCalander = ({ data, setStartDate }) => {
   const { bookings } = data;
 
   const bookedDates = bookings.map((date) => new Date(date));
 
   return (
     <DatePicker
-      selected={startDate}
+      selected={false}
       onChange={(date) => setStartDate(date)}
-      startDate={startDate}
+      // startDate={startDate}
       minDate={new Date()}
       excludeDates={[...bookedDates]}
       showDisabledMonthNavigation
