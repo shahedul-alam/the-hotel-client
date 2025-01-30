@@ -33,8 +33,7 @@ const router = createBrowserRouter([
       },
       {
         path: "my-bookings",
-        element: <PrivateRoute><MyBookingsPage /></PrivateRoute>,
-        // loader: roomDetailsLoader
+        element: <PrivateRoute><MyBookingsPage /></PrivateRoute>
       },
       {
         path: "login",

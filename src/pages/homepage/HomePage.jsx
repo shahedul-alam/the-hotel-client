@@ -1,3 +1,4 @@
+import FeaturedRooms from "../../components/homepage/FeaturedRooms";
 import HeroBanner from "../../components/homepage/HeroBanner";
 import HotelMap from "../../components/homepage/HotelMap";
 import Newsletter from "../../components/homepage/Newsletter";
@@ -8,6 +9,7 @@ const HomePage = () => {
     <main>
       <HeroBanner />
       <NewSpaces />
+      <FeaturedRooms />
       <HotelMap />
       <Newsletter />
     </main>

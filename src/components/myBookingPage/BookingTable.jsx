@@ -3,6 +3,8 @@ import { Link } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import UpdateBookingModal from "./UpdateBookingModal";
+import ReviewModal from "./ReviewModal";
+import Swal from "sweetalert2";
 
 const BookingTableRow = ({
   data,
@@ -12,6 +14,7 @@ const BookingTableRow = ({
   errorToast,
 }) => {
   const axiosSecure = useAxiosSecure();
+  const [reviewGiven, setReviewGiven] = useState(false);
 
   const {
     _id,
@@ -26,15 +29,37 @@ const BookingTableRow = ({
   } = data;
 
   const handleCancelBooking = () => {
-    axiosSecure
-      .delete(
-        `/cancel-booking?email=${userEmail}&bookingId=${_id}&roomId=${roomId}&date=${bookingDate}`
-      )
-      .then((res) => {
-        successToast("Booking canceled successfully!");
-        setBookingData((prev) => prev.filter((item) => item._id !== _id));
-      })
-      .catch((error) => errorToast(error.response.data?.message));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#000",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete(
+            `/cancel-booking?email=${userEmail}&bookingId=${_id}&roomId=${roomId}&date=${bookingDate}`
+          )
+          .then((res) => {
+            Swal.fire({
+              title: "Canceled!",
+              text: "Your booking has been canceled.",
+              icon: "success",
+            });
+            setBookingData((prev) => prev.filter((item) => item._id !== _id));
+          })
+          .catch((error) => {
+            Swal.fire({
+              title: "Ooops...",
+              text: error.response.data?.message,
+              icon: "error",
+            });
+          });
+      }
+    });
   };
 
   const handleUpdateBookingDates = (updatedDate, setStartDate) => {
@@ -45,6 +70,21 @@ const BookingTableRow = ({
       String(updatedDate.getMonth() + 1).padStart(2, "0") +
       "-" +
       String(updatedDate.getDate()).padStart(2, "0");
+
+    // Get the current date in 'YYYY-MM-DD' format
+    const currentDate = new Date();
+    const formattedCurrentDate =
+      currentDate.getFullYear() +
+      "-" +
+      String(currentDate.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(currentDate.getDate()).padStart(2, "0");
+
+    // Prevent updating if the booking date has already passed
+    if (bookingDate < formattedCurrentDate) {
+      errorToast("You cannot update past bookings.");
+      return;
+    }
 
     const updatedBookingInfo = {
       roomId: roomId,
@@ -68,7 +108,10 @@ const BookingTableRow = ({
             if (item.roomId === roomId) {
               return {
                 ...item,
-                bookingDate: item.bookingDate === bookingDate ? formattedUpdatedDate : item.bookingDate, // Update main booking date if it matches
+                bookingDate:
+                  item.bookingDate === bookingDate
+                    ? formattedUpdatedDate
+                    : item.bookingDate, // Update main booking date if it matches
                 bookings: item.bookings.map((date) =>
                   date === bookingDate ? formattedUpdatedDate : date
                 ), // Update all occurrences in the bookings array
@@ -77,13 +120,37 @@ const BookingTableRow = ({
             return item; // Return unchanged item for all other cases
           })
         );
-        
+
         setStartDate(null);
       })
       .catch((error) => {
         errorToast(error.response.data?.message);
         // Closing the modal
         document.getElementById(`updateBookingModal${_id}`).close();
+      });
+  };
+
+  const handleReview = (reviewInfo) => {
+    if (reviewInfo.client_rating < 0) {
+      errorToast("Please enter the rating!");
+      return;
+    }
+
+    if (!reviewInfo.client_review) {
+      errorToast("Please enter the review!");
+      return;
+    }
+
+    axiosSecure
+      .post(`/review?id=${roomId}&email=${client_email}`, reviewInfo)
+      .then((res) => {
+        successToast("Review posted successfully!");
+        document.getElementById(`reviewModal${_id}`).close();
+        setReviewGiven(true);
+      })
+      .catch((error) => {
+        errorToast(error.response.data?.message);
+        document.getElementById(`reviewModal${_id}`).close();
       });
   };
 
@@ -120,9 +187,16 @@ const BookingTableRow = ({
         />
       </th>
       <th>
-        <button className="btn btn-ghost bg-black text-white rounded-none hover:text-black">
+        <button
+          className="btn btn-ghost bg-black text-white rounded-none hover:text-black"
+          disabled={reviewGiven ? true : false}
+          onClick={() =>
+            document.getElementById(`reviewModal${_id}`).showModal()
+          }
+        >
           Review
         </button>
+        <ReviewModal id={_id} handleReview={handleReview} />
       </th>
       <th>
         <button

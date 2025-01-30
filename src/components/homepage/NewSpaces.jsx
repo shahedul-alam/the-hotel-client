@@ -13,7 +13,7 @@ const NewSpaces = () => {
             The reputable one-Michelin-star restaurant Sra Bua by Kiin Kiin at
             The Hotel Bangkok welcomes the warm summer
           </p>
-          <Link className="w-full btn btn-ghost text-black border border-black rounded-none font-bold">
+          <Link to={"/our-rooms"} className="w-full btn btn-ghost text-black border border-black rounded-none font-bold">
             LEARN MORE
           </Link>
         </div>
