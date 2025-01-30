@@ -4,12 +4,16 @@ import Newsletter from "../../components/homepage/Newsletter";
 import RoomsSlider from "../../components/roomDetailsPage/RoomsSlider";
 import { axiosInstance } from "../../hooks/useAxiosSecure";
 import Reviews from "../../components/roomDetailsPage/Reviews";
+import { Helmet } from "react-helmet-async";
 
 const RoomDetailsPage = () => {
   const data = useLoaderData();
 
   return (
     <main>
+      <Helmet>
+        <title>{data.name} | the hotel</title>
+      </Helmet>
       <RoomDetails data={data} />
       <RoomsSlider />
       <Reviews data={data} />
