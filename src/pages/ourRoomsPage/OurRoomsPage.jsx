@@ -21,7 +21,7 @@ const OurRoomsPage = () => {
 export default OurRoomsPage;
 
 export const roomsLoader = async () => {
-  const result = await axios.get("http://localhost:5000/rooms");
+  const result = await axios.get("https://the-hotel-server.vercel.app/rooms");
 
   return result.data;
 };
