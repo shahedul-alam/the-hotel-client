@@ -3,6 +3,7 @@ import RoomDetails from "../../components/roomDetailsPage/RoomDetails";
 import Newsletter from "../../components/homepage/Newsletter";
 import RoomsSlider from "../../components/roomDetailsPage/RoomsSlider";
 import { axiosInstance } from "../../hooks/useAxiosSecure";
+import Reviews from "../../components/roomDetailsPage/Reviews";
 
 const RoomDetailsPage = () => {
   const data = useLoaderData();
@@ -11,6 +12,7 @@ const RoomDetailsPage = () => {
     <main>
       <RoomDetails data={data} />
       <RoomsSlider />
+      <Reviews data={data} />
       <Newsletter />
     </main>
   );
