@@ -4,7 +4,8 @@ import useAuth from "../../hooks/useAuth";
 import { Helmet } from "react-helmet-async";
 
 const LoginPage = () => {
-  const { signinUser, logInWithGoogle, successToast, errorToast } = useAuth();
+  const { signinUser, logInWithGoogle, successToast, errorToast, loading } =
+    useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,8 +22,11 @@ const LoginPage = () => {
       .then(() => {
         // showing successful login alert
         successToast("Welcome back! Logged in successfully.");
-        // navigating to previous page
-        navigate(from, { replace: true });
+        
+        setTimeout(() => {
+          // navigating to previous page
+          navigate(from, { replace: true });
+        }, 1000);
       })
       .catch(() => {
         // showing error login alert
@@ -35,8 +39,11 @@ const LoginPage = () => {
       .then(() => {
         // showing successful login alert
         successToast("Welcome back! Logged in successfully.");
-        // navigating to previous page
-        navigate(from, { replace: true });
+
+        setTimeout(() => {
+          // navigating to previous page
+          navigate(from, { replace: true });
+        }, 1000);
       })
       .catch(() => {
         // showing error login alert

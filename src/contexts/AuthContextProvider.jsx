@@ -29,7 +29,9 @@ const AuthContextProvider = ({ children }) => {
           .post("/get-token", { email: currentUser.email })
           .then((res) => setLoading(false));
       } else {
-        axiosInstance.get("/remove-token").then((res) => setLoading(false));
+        axiosInstance
+          .post("/remove-token", {})
+          .then((res) => setLoading(false));
       }
     });
 

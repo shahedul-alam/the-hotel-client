@@ -36,8 +36,11 @@ const RegisterPage = () => {
             .then(() => {
               // showing successful register alert
               successToast("Congratulations! Registered successfully");
-              // navigating to homepage
-              navigate("/", { replace: true });
+
+              setTimeout(() => {
+                // navigating to previous page
+                navigate(from, { replace: true });
+              }, 1000);
             })
             .catch(() => {
               // showing error register alert
@@ -58,8 +61,11 @@ const RegisterPage = () => {
       .then(() => {
         // showing successful register alert
         successToast("Congratulations! Registered successfully");
-        // navigating to previous page
-        navigate("/", { replace: true });
+
+        setTimeout(() => {
+          // navigating to previous page
+          navigate(from, { replace: true });
+        }, 1000);
       })
       .catch(() => {
         // showing error register alert
